@@ -1,17 +1,23 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-    provider = "prisma-client-js"
-}
-
 datasource db {
-    provider = "sqlite"
-    url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+generator client {
+  provider = "prisma-client-js"
+}
+
+// MySQL native data types: https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+
+model Post {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @db.TinyText
+  body      String   @db.MediumText
+  author    String?  @db.TinyText
 }

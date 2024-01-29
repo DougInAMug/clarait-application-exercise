@@ -1,16 +1,15 @@
 import axios from "axios";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [blah, setBlah] = useState("initialBlah");
+  const [post, setPost] = useState([]);
 
-  const fetchX = async () => {
-    const x = await axios.get("/api/hello");
-    setBlah(x.data.message);
-  };
-
-  fetchX()
+  useEffect(() => {
+    axios.get("/api/prismaFindMany").then((response) => {
+      setPost(response.data);
+    });
+  }, []);
 
   return (
     <>
@@ -20,7 +19,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        {blah}
+        <div>
+          {post.map((element, index, array) => (
+            <div key={index}>
+              <h2 className="font-bold">{element.title}</h2>
+              <p>{element.body}</p>
+            </div>
+          ))}
+        </div>
       </main>
     </>
   );

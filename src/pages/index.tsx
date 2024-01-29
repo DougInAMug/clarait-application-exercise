@@ -1,5 +1,6 @@
 import axios from "axios";
 import Head from "next/head";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -21,10 +22,10 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div>
           {post.map((element, index, array) => (
-            <div key={index}>
+            <Link key={index} href={`blog/${element.id}`}>
               <h2 className="font-bold">{element.title}</h2>
-              <p>{element.body}</p>
-            </div>
+              <p>{new Date(element.createdAt).toLocaleDateString()}</p>
+            </Link>
           ))}
         </div>
       </main>

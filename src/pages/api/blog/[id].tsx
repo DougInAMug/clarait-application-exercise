@@ -5,6 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const postsRequest = await prisma.post.findMany();
-  res.status(200).json(postsRequest);
+  const { id } = req.query;
+  const postRequest = await prisma.post.findUnique({
+    where: {
+      id: id,
+    },
+  });
+  res.status(200).json(postRequest);
 }

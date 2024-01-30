@@ -1,24 +1,26 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import axios from 'axios'
+import { api } from "~/utils/api";
+import type { Post } from "@prisma/client";
 
-interface Props {}
-export default function PostsList({}: Props) {
-  const [post, setPost] = useState([]);
+export default function PostsList() {
+  const [post, setPost] = useState<Post[]>();
 
-  useEffect(() => {
-    axios.get("/api/getAllPosts").then((response) => {
-      setPost(response.data);
-    });
-  }, []);
-  return (
-    <div>
-      {post.map((element, index, array) => (
-        <Link key={index} href={`blog/${element.id}`}>
-          <h2 className="font-bold">{element.title}</h2>
-          <p>{new Date(element.createdAt).toLocaleDateString()}</p>
-        </Link>
-      ))}
-    </div>
+  const hello = api.router.getAllPostsTRCP.useQuery(
+    useEffect(() => {
+      setPost(hello.data);
+    }, [])
   );
+
+  if (post != undefined)
+    return (
+      <div>
+        {post.map((element, index, array) => (
+          <Link key={index} href={`blog/${element.id}`}>
+            <h2 className="font-bold text-white">{element.title}</h2>
+            <p className="text-white">{new Date(element.createdAt).toLocaleDateString()}</p>
+          </Link>
+        ))}
+      </div>
+    );
 }

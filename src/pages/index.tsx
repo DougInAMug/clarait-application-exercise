@@ -4,7 +4,7 @@ import PostsList from "~/components/PostsList";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const hello = api.router.hello.useQuery({ text: 'client' });
+  // const hello = api.router.hello.useQuery({ text: 'client' });
   const allPosts = api.router.getAllPostsTRCP.useQuery();
   // if (!hello.data) {
   //   return <div>Loading...</div>;

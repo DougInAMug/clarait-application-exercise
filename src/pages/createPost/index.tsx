@@ -6,23 +6,13 @@ export default function Page() {
 
     const formData = new FormData(event.currentTarget);
 
-    // I cannot for the life of me figure out how to natively use the FormData object, so converting to json tthe way I know how
-    var formDataObject = {};
-    formData.forEach(function (value, key) {
-      formDataObject[key] = value;
-    });
-    var json = JSON.stringify(formDataObject);
-
-    console.log("FRONT", json);
+    // I cannot for the life of me figure out how to natively use the FormData object, so converting to json the way I know how
+    const formDataObj = Object.fromEntries(formData.entries());
 
     const response = await fetch("/api/submitNewPost", {
       method: "POST",
-      body: json,
+      body: JSON.stringify(formDataObj),
     });
-
-    // Handle response if necessary
-    const data = await response.json();
-    // ...
   }
 
   return (
